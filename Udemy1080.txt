@@ -1,0 +1,55 @@
+[
+  {
+    "creationDate": 1544862824762,
+    "description": "",
+    "groupId": "",
+    "id": "Replace_1544862824762",
+    "name": "udemy",
+    "objectType": "rule",
+    "pairs": [
+      {
+        "from": "hls_144",
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": ""
+        },
+        "status": "Inactive",
+        "to": "hls_1080"
+      },
+      {
+        "from": "hls_720",
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": ""
+        },
+        "status": "Inactive",
+        "to": "hls_1080"
+      },
+      {
+        "from": "hls_480",
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": ""
+        },
+        "status": "Inactive",
+        "to": "hls_1080"
+      },
+      {
+        "from": "hls_360",
+        "source": {
+          "key": "Url",
+          "operator": "Contains",
+          "value": ""
+        },
+        "status": "Inactive",
+        "to": "hls_1080"
+      }
+    ],
+    "ruleType": "Replace",
+    "status": "Active",
+    "version": 2
+  }
+]
