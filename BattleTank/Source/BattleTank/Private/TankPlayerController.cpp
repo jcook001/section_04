@@ -4,10 +4,14 @@
 #include "TankPlayerController.h"
 #include "BattleTank.h"
 
+void ATankPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("Begin play called in TankPlayerController"));
 
 	auto ControlledTank = GetControlledTank();
 	if (!ControlledTank)
@@ -24,3 +28,9 @@ ATank* ATankPlayerController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
 };
+
+void ATankPlayerController::AimTowardsCrosshair()
+{
+	if (!GetControlledTank()) { return; };
+
+}
