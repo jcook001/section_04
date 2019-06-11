@@ -25,4 +25,11 @@ private:
 
 	virtual void AimTowardsCrosshair();
 
+	const bool GetSightRayHitLocation(FVector& HitLocation);
+
+	FVector PlayerViewPointLocation;
+	FRotator PlayerViewPointRotation;
+	float PlayerViewDistance = 1000.f;
+	FVector PlayerViewDistanceEnd;
+	FHitResult HitLocation;
 };
