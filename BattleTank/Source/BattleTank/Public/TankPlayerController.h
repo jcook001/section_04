@@ -25,11 +25,13 @@ private:
 
 	virtual void AimTowardsCrosshair();
 
-	const bool GetSightRayHitLocation(FVector& HitLocation);
+	const bool GetSightRayHitLocation(FVector& OutHitLocation);
 
-	FVector PlayerViewPointLocation;
-	FRotator PlayerViewPointRotation;
-	float PlayerViewDistance = 1000.f;
-	FVector PlayerViewDistanceEnd;
 	FHitResult HitLocation;
+
+	UPROPERTY(EditAnywhere)
+	float CrossHairXLocation = 0.5;
+
+	UPROPERTY(EditAnywhere)
+	float CrossHairYLocation = 0.33333;
 };
