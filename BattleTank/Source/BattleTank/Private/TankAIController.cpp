@@ -24,6 +24,20 @@ void ATankAIController::BeginPlay()
 	GetPlayerTank();
 };
 
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (GetPlayerTank())
+	{
+		//TODO Move towards the player
+
+		//Aim towards the player
+		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+
+		//Fire if ready
+	}
+}
+
 ATank* ATankAIController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
@@ -35,12 +49,12 @@ APlayerController* ATankAIController::GetPlayerController() const
 
 	if (!PlayerController) 
 	{
-		UE_LOG(LogTemp, Error, TEXT("AIPlayer: %s cannot find Player Controller"), *(GetControlledTank()->GetController()->GetName()));
+		//UE_LOG(LogTemp, Error, TEXT("AIPlayer: %s cannot find Player Controller"), *(GetControlledTank()->GetController()->GetName()));
 		return nullptr;
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("AIPlayer: %s has found Player Controller"), *(GetControlledTank()->GetController()->GetName()));
+		//UE_LOG(LogTemp, Warning, TEXT("AIPlayer: %s has found Player Controller"), *(GetControlledTank()->GetController()->GetName()));
 		return PlayerController;
 	}
 };
@@ -50,12 +64,12 @@ ATank* ATankAIController::GetPlayerTank() const
 	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 	if (!PlayerTank)
 	{
-		UE_LOG(LogTemp, Error, TEXT("AIPlayer: %s cannot find Player Pawn"), *(GetControlledTank()->GetController()->GetName()));
+		//UE_LOG(LogTemp, Error, TEXT("AIPlayer: %s cannot find Player Pawn"), *(GetControlledTank()->GetController()->GetName()));
 		return nullptr;
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("AIPlayer: %s has found Player Pawn: %s"), *(GetControlledTank()->GetController()->GetName()), *(PlayerTank->GetName()));
+		//UE_LOG(LogTemp, Warning, TEXT("AIPlayer: %s has found Player Pawn: %s"), *(GetControlledTank()->GetController()->GetName()), *(PlayerTank->GetName()));
 		return Cast<ATank>(PlayerTank);
 	}
 };
