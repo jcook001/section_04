@@ -3,6 +3,7 @@
 
 #include "TankPlayerController.h"
 #include "BattleTank.h"
+#include "Engine/Classes/GameFramework/PlayerController.h"
 #include "Engine/World.h"
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -46,7 +47,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 };
 
 //Get world location of linetrace through crosshair, true if hits landscape
-const bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation)
+bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
 {
 	//find the crosshair position
 	int32 ViewportSizeX, ViewportSizeY;
@@ -54,8 +55,47 @@ const bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation
 	auto ScreenLocation = FVector2D((ViewportSizeX * CrossHairXLocation) , (ViewportSizeY * CrossHairYLocation));
 	
 	//De-project the screen position of the crosshair to a wold direction
-	//Line-trace along that look direction, and see what we hit (Up to a max range)
+	FVector LookDirection;
+	if(GetLookDirection(ScreenLocation, LookDirection))
+	{
+		//Line-trace along that look direction, and see what we hit (Up to a max range)
+		GetLookVectorHitLocation(LookDirection, OutHitLocation);
+		UE_LOG(LogTemp, Warning, TEXT("Hit location: %s"), *OutHitLocation.ToString());
+	}
+	
 
 	return true;
 
 }
+
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+{
+	FVector WorldLocation; //Not needed
+	return DeprojectScreenPositionToWorld(
+		ScreenLocation.X, 
+		ScreenLocation.Y, 
+		WorldLocation, 
+		LookDirection
+	);
+};
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const
+{
+	FHitResult HitResult;
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
+
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult,
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_Visibility)
+		)
+	{
+		HitLocation = HitResult.Location;
+		UE_LOG(LogTemp, Warning, TEXT("Object hit: %s"), *HitResult.ToString());
+		return true;
+	};
+
+	return false;
+};

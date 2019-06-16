@@ -25,7 +25,14 @@ private:
 
 	virtual void AimTowardsCrosshair();
 
-	const bool GetSightRayHitLocation(FVector& OutHitLocation);
+	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
+
+	bool GetLookDirection(FVector2D ScreenLocation, FVector & LookDirection) const;
+
+	bool GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const;
+	
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000.f;
 
 	FHitResult HitLocation;
 
