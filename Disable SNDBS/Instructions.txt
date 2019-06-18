@@ -1,0 +1,10 @@
+To disable SNDBS edit the BuildConfiguration.txt file found in:
+C:\Users\Jamie\AppData\Roaming\Unreal Engine\UnrealBuildTool
+
+Add the following:
+
+  <BuildConfiguration>
+    <bAllowSNDBS> false </bAllowSNDBS>
+  </BuildConfiguration>
+
+Edited file included for ease.
