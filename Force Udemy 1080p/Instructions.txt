@@ -1,0 +1,5 @@
+Go to http://www.requestly.in and install the Chrome extension.
+
+Log in and then find the upload button. Press this and upload the .txt file "Udemy1080.txt"
+
+Udemy should then stream at 1080 regardless of the settings shown in the video player.
