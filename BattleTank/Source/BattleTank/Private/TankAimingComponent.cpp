@@ -4,6 +4,7 @@
 #include "TankAimingComponent.h"
 #include "Tank.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -39,10 +40,38 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation)
+void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	auto OurTankName = GetOwner()->GetName();
-	auto BarrellLocation = Barrel->GetComponentLocation().ToString();
-	UE_LOG(LogTemp, Warning, TEXT("%s aiminig at: %s from %s"), *OurTankName, *HitLocation.ToString(), *BarrellLocation);
+	if (!Barrel) { return; }
+
+	FVector OutLaunchVelocity;
+	FVector StartLocation = Barrel->GetSocketLocation(FName("BarrelEnd"));
+	FCollisionResponseParams DefaultResponse;
+	TArray < AActor* > ActorsToIgnore;
+
+	//Calculate the out launch velocity
+
+	auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+
+	if (UGameplayStatics::SuggestProjectileVelocity
+			(
+				this,
+				OutLaunchVelocity,
+				StartLocation,
+				HitLocation,
+				LaunchSpeed,
+				false, //if false choose low arc
+				1, //collision radius
+				0, //override gravity, 0 is no override
+				ESuggestProjVelocityTraceOption::DoNotTrace,
+				DefaultResponse,
+				ActorsToIgnore,
+				true //draw debug?
+			)
+		)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Aiming at %s"), *AimDirection.ToString());
+	}
+
 };
 
