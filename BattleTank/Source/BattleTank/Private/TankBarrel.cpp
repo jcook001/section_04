@@ -2,8 +2,11 @@
 
 
 #include "TankBarrel.h"
+#include "Engine/World.h"
 
-void UTankBarrel::Elevate(float DegreesPerSecond)
+void UTankBarrel::Elevate(float RelativeSpeed)
 {
+	//Move the barrel the right amount this fram
+	//Given a max elevation speed, and the frame time
 
 }
