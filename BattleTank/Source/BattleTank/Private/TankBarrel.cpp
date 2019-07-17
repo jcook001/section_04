@@ -3,7 +3,6 @@
 
 #include "TankBarrel.h"
 #include "Math/UnrealMathUtility.h"
-#include "Engine/World.h" //TODO remove this?
 
 void UTankBarrel::Elevate(float RelativeSpeed)
 {
