@@ -3,11 +3,11 @@
 
 #include "TankBarrel.h"
 #include "Math/UnrealMathUtility.h"
-#include "Engine/World.h"
+#include "Engine/World.h" //TODO remove this?
 
 void UTankBarrel::Elevate(float RelativeSpeed)
 {
-	//Move the barrel the right amount this fram
+	//Move the barrel the right amount this frame
 	//Given a max elevation speed, and the frame time
 	RelativeSpeed = FMath::Clamp<float>(RelativeSpeed, -1, 1);
 
