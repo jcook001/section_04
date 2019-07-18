@@ -67,11 +67,6 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		RotateTurretTowards(AimDirection);
 
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%f: No aim solution found"), Time);
-	}
-
 };
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
@@ -90,8 +85,6 @@ void UTankAimingComponent::RotateTurretTowards(FVector AimDirection)
 	auto TurretRotator = Turret->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - TurretRotator;
-
-	UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"), *GetOwner()->GetName(), *AimAsRotator.ToString());
 
 	Turret->Rotate(DeltaRotator.Yaw);
 }
