@@ -36,6 +36,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(BlueprintReadWrite)
+	bool AIPlayerCanShoot = true;
+
+	bool GetAIPlayerCanShoot() const;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

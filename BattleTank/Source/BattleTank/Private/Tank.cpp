@@ -66,3 +66,8 @@ void ATank::Fire()
 		LastFireTime = FPlatformTime::Seconds();
 	}
 }
+
+bool ATank::GetAIPlayerCanShoot() const
+{
+	return AIPlayerCanShoot;
+}
