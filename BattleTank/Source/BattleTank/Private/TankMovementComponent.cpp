@@ -33,4 +33,8 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	UE_LOG(LogTemp, Warning, TEXT("TankForwardDirection is %s, AIForwardDirection is %s, AITankThrow is %f"), *TankForwardDirection.ToString(), *AIForwardIntention.ToString(), AITankThrow)
 
 	IntendMoveForward(AITankThrow);
+
+    auto RightThrow = FVector::CrossProduct(TankForwardDirection, AIForwardIntention).Z;
+
+    IntendTurnRight(RightThrow);
 }
