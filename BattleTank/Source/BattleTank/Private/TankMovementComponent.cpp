@@ -30,7 +30,7 @@ void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool
 	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
 	auto AITankThrow = FVector::DotProduct(TankForwardDirection, AIForwardIntention);
 
-	UE_LOG(LogTemp, Warning, TEXT("TankForwardDirection is %s, AIForwardDirection is %s, AITankThrow is %f"), *TankForwardDirection.ToString(), *AIForwardIntention.ToString(), AITankThrow)
+	UE_LOG(LogTemp, Warning, TEXT("%s AIForwardDirection: %s, AIForwardIntention: is %s, AITankThrow is %f"), *GetOwner()->GetName(), *TankForwardDirection.ToString(), *AIForwardIntention.ToString(), AITankThrow)
 
 	IntendMoveForward(AITankThrow);
 
