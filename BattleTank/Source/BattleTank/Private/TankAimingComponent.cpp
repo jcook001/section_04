@@ -20,16 +20,16 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
-    if (!BarrelToSet) { return; }
+    if (!ensure (BarrelToSet)) { return; }
     Barrel = BarrelToSet;
 
-    if (!TurretToSet) { return; }
+    if (!ensure (TurretToSet)) { return; }
     Turret = TurretToSet;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
-	if (!Barrel || !Turret) { UE_LOG(LogTemp, Error, TEXT("Turret or Barrel are missing!")); return; }
+	if (!ensure (Barrel && Turret)) { UE_LOG(LogTemp, Error, TEXT("Turret or Barrel are missing!")); return; }
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("BarrelEnd"));

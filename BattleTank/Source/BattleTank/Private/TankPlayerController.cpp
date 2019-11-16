@@ -20,7 +20,7 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	auto ControlledTank = GetControlledTank();
-	if (!ControlledTank)
+	if (!ensure (ControlledTank))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Player is not possessing a tank!"));
 	}
@@ -30,13 +30,13 @@ void ATankPlayerController::BeginPlay()
 	}
 
     auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
-    if (AimingComponent)
+    if (!ensure (AimingComponent))
     {
-        FoundAimingComponent(AimingComponent);
+		UE_LOG(LogTemp, Error, TEXT("Player Controller can't find AimingComponent at begin play"));
     }
     else
     {
-        UE_LOG(LogTemp, Error, TEXT("Player Controller can't find AimingComponent at begin play"));
+		FoundAimingComponent(AimingComponent);
     }
 };
 
@@ -47,7 +47,7 @@ ATank* ATankPlayerController::GetControlledTank() const
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()) { return; };
+	if (!ensure(GetControlledTank())) { return; };
 
 	FVector HitLocation; // out parameter
 	if (GetSightRayHitLocation(HitLocation))// has "side-effect", is going to line trace

@@ -3,7 +3,6 @@
 
 #include "Tank.h"
 #include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Projectile.h"
 #include "TankBarrel.h"
@@ -24,7 +23,7 @@ void ATank::BeginPlay()
 
 void ATank::AimAt(FVector HitLocation)
 {
-    if (!TankAimingComponent) { UE_LOG(LogTemp, Error, TEXT("TankAimingComponent is missing!")); return; }
+    if (!ensure (TankAimingComponent)) { /*UE_LOG(LogTemp, Error, TEXT("TankAimingComponent is missing!"));*/ return; }
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
@@ -35,9 +34,10 @@ void ATank::InitialiseAiming(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 
 void ATank::Fire()
 {
+	if (!ensure (Barrel)) { return; }
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	if (Barrel && isReloaded)
+	if (isReloaded)
 	{
 		//spawn a projectile at the socket location on the barrel
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(

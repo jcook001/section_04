@@ -21,7 +21,7 @@ void ATankAIController::Tick(float DeltaTime)
 	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	auto ControlledTank = Cast<ATank>(GetPawn());
 
-	if (PlayerTank && ControlledTank)
+	if (ensure (PlayerTank && ControlledTank))
 	{
 		//Move towards the player
 		MoveToActor(
@@ -34,7 +34,7 @@ void ATankAIController::Tick(float DeltaTime)
 
 		//Fire if ready
 		//check debug option
-		if (PlayerTank->GetAIPlayerCanShoot())
+		if (ensure (PlayerTank->GetAIPlayerCanShoot()))
 		{
 			ControlledTank->Fire(); //TODO renenable this
 		}
