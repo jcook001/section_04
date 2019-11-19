@@ -21,12 +21,6 @@ void ATank::BeginPlay()
 	
 }
 
-void ATank::AimAt(FVector HitLocation)
-{
-    if (!ensure (TankAimingComponent)) { /*UE_LOG(LogTemp, Error, TEXT("TankAimingComponent is missing!"));*/ return; }
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-}
-
 void ATank::InitialiseAiming(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
 {
 
@@ -46,7 +40,7 @@ void ATank::Fire()
 			Barrel->GetSocketRotation(FName("BarrelEnd"))
 			);
 
-		Projectile->LaunchProjectile(LaunchSpeed);
+		//Projectile->LaunchProjectile(LaunchSpeed); //TODO fix firing
 		UE_LOG(LogTemp, Warning, TEXT("Pew Pew"));
 		LastFireTime = FPlatformTime::Seconds();
 	}

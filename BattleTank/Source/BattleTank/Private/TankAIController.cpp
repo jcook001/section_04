@@ -2,9 +2,7 @@
 
 
 #include "TankAIController.h" // this needs to stay at the top
-#include "TankPlayerController.h"
-#include "TankMovementComponent.h"
-#include "Tank.h"
+#include "TankAimingComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "BattleTank.h"
 #include "Engine/World.h"
@@ -18,29 +16,23 @@ void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	auto ControlledTank = Cast<ATank>(GetPawn());
+	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
+	auto ControlledTank = GetPawn();
+    auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 
-	if (ensure (PlayerTank && ControlledTank))
-	{
-		//Move towards the player
-		MoveToActor(
-			PlayerTank,
-			AcceptanceRadius
-			);
+    if (!ensure(PlayerTank && ControlledTank)) { return; }
+	
+	//Move towards the player
+	MoveToActor(
+		PlayerTank,
+		AcceptanceRadius
+		);
 
-		//Aim towards the player
-		ControlledTank->AimAt(PlayerTank->GetActorLocation());
+	//Aim towards the player
+	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
-		//Fire if ready
-		//check debug option
-		if (ensure (PlayerTank->GetAIPlayerCanShoot()))
-		{
-			ControlledTank->Fire(); //TODO renenable this
-		}
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AI or player are not possessing a tank!"));
-	}
+	//Fire if ready
+    //TODO fix firing
+	//ControlledTank->Fire(); //TODO add debug option check
+
 };
