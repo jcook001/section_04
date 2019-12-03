@@ -10,6 +10,17 @@
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
+
+    auto ControlledTank = GetPawn();
+    auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+    if (!ensure(AimingComponent))
+    {
+        UE_LOG(LogTemp, Error, TEXT("AI Controller can't find AimingComponent at begin play"));
+    }
+    else
+    {
+        FoundAimingComponent(AimingComponent);
+    }
 };
 
 void ATankAIController::Tick(float DeltaTime)
@@ -31,7 +42,10 @@ void ATankAIController::Tick(float DeltaTime)
 	//Aim towards the player
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
-	//Fire if ready
-    AimingComponent->Fire(); //TODO add debug option check
+	//Fire if ready & Debug option is true
+    if (AimingComponent->AIPlayersCanShoot)
+    {
+        AimingComponent->Fire();
+    }
 
 };
