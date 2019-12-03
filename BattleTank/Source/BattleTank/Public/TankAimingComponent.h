@@ -33,6 +33,9 @@ public:
     UFUNCTION(BlueprintCallable)
     void Fire();
 
+    UPROPERTY(BlueprintReadWrite)
+    bool AIPlayersCanShoot = true;
+
 protected:
     UPROPERTY(BlueprintReadOnly, Category = "State")
     EFiringState FiringState = EFiringState::Aiming;
@@ -51,6 +54,10 @@ private:
     float ReloadTimeInSeconds = 3;
 
     double LastFireTime = 0;
+
+    FVector AimDirection;
+
+    bool IsBarrelMoving();
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
