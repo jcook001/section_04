@@ -12,7 +12,8 @@ enum class EFiringState : uint8
 {
     Reloading,
     Aiming,
-    Locked
+    Locked,
+    OutOfAmmo
 };
 
 class UTankBarrel;
@@ -37,6 +38,9 @@ public:
     bool AIPlayersCanShoot = true;
 
     EFiringState GetFiringState() const;
+
+    UPROPERTY(BlueprintReadOnly)
+    int Ammo = 10;
 
 protected:
     UPROPERTY(BlueprintReadOnly, Category = "State")

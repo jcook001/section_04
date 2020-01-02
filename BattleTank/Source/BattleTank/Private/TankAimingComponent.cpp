@@ -30,7 +30,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 {
     Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
     
-    if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+    if (Ammo <= 0)
+    {
+        FiringState = EFiringState::OutOfAmmo;
+    }
+    else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
     {
         FiringState = EFiringState::Reloading;
     }
@@ -138,8 +142,7 @@ void UTankAimingComponent::Fire()
 {
     if (!ensure(Barrel && ProjectileBlueprint)) { return; }
 
-
-    if (FiringState != EFiringState::Reloading)
+    if (FiringState != EFiringState::Reloading && Ammo > 0)
     {
         //spawn a projectile at the socket location on the barrel
         auto Projectile = GetWorld()->SpawnActor<AProjectile>(
@@ -151,6 +154,7 @@ void UTankAimingComponent::Fire()
         Projectile->LaunchProjectile(LaunchSpeed);
         UE_LOG(LogTemp, Warning, TEXT("Pew Pew"));
         LastFireTime = FPlatformTime::Seconds();
+        Ammo--;
     }
 }
 
