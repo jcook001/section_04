@@ -15,10 +15,11 @@ protected:
     UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
     void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
+    UPROPERTY(EditDefaultsOnly, Category = "Setup")
+    float AcceptanceRadius = 8000.f;
+
 private:
 	void BeginPlay() override;
 
 	virtual void Tick(float DeltaTime) override;
-
-	float AcceptanceRadius = 3000.f;
 };

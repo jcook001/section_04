@@ -36,6 +36,8 @@ public:
     UPROPERTY(BlueprintReadWrite)
     bool AIPlayersCanShoot = true;
 
+    EFiringState GetFiringState() const;
+
 protected:
     UPROPERTY(BlueprintReadOnly, Category = "State")
     EFiringState FiringState = EFiringState::Aiming;
