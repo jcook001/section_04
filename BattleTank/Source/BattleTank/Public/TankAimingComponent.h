@@ -39,8 +39,8 @@ public:
 
     EFiringState GetFiringState() const;
 
-    UPROPERTY(BlueprintReadOnly)
-    int Ammo = 10;
+    UPROPERTY(EditDefaultsOnly, Category = "Firing")
+    int32 Ammo = 10;
 
 protected:
     UPROPERTY(BlueprintReadOnly, Category = "State")
@@ -53,8 +53,9 @@ private:
     // Sets default values for this component's properties
     UTankAimingComponent();
 
+    //TODO find sensible default
     UPROPERTY(EditDefaultsOnly, Category = "Firing")
-    float LaunchSpeed = 10000; //TODO find sensible default
+    float LaunchSpeed = 10000;
 
     UPROPERTY(EditDefaultsOnly, Category = "Firing")
     float ReloadTimeInSeconds = 3;
