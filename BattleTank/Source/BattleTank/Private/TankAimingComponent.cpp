@@ -73,7 +73,7 @@ bool UTankAimingComponent::IsBarrelMoving()
 
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
-	if (!ensure (Barrel && Turret)) { UE_LOG(LogTemp, Error, TEXT("Turret or Barrel are missing!")); return; }
+	if (!ensure (Barrel && Turret)) { UE_LOG(LogTemp, Error, TEXT("Turret or Barrel are missing from %s!"), *GetOwner()->GetName()); return; }
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("BarrelEnd"));
@@ -108,6 +108,10 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 		RotateTurretTowards(AimDirection);
 
 	}
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("%s does not have an aim solution"), *GetOwner()->GetName());
+    }
 };
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
@@ -152,7 +156,6 @@ void UTankAimingComponent::Fire()
             );
 
         Projectile->LaunchProjectile(LaunchSpeed);
-        UE_LOG(LogTemp, Warning, TEXT("Pew Pew"));
         LastFireTime = FPlatformTime::Seconds();
         Ammo--;
     }
