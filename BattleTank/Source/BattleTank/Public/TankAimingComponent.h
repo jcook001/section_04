@@ -39,7 +39,7 @@ public:
 
     EFiringState GetFiringState() const;
 
-    UPROPERTY(EditDefaultsOnly, Category = "Firing")
+    UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Firing")
     int32 Ammo = 10;
 
 protected:
@@ -72,6 +72,6 @@ private:
 	void MoveBarrelTowards(FVector AimDirection);
 	void RotateTurretTowards(FVector AimDirection);
 
-    UPROPERTY(EditDefaultsOnly, Category = "Setup")
+    UPROPERTY(EditAnywhere, Category = "Setup")
     TSubclassOf<AProjectile> ProjectileBlueprint;
 };
