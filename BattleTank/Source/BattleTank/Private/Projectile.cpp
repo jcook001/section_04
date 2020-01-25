@@ -3,6 +3,8 @@
 
 #include "Projectile.h"
 #include "Runtime/Engine/Classes/GameFramework/ProjectileMovementComponent.h"
+#include "Engine/StaticMesh.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "Runtime/Core/Public/Math/Vector.h"
 
 // Sets default values
@@ -14,6 +16,15 @@ AProjectile::AProjectile()
 	//No need to protect points as added at construction
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement Component"));
 	ProjectileMovementComponent->bAutoActivate = false;
+
+    CollisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Collision Mesh"));
+    SetRootComponent(CollisionMesh);
+    CollisionMesh->SetNotifyRigidBodyCollision(true);
+    CollisionMesh->SetVisibility(true);
+
+    LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
+    LaunchBlast->AttachTo(CollisionMesh);
+    LaunchBlast->bAutoActivate = true;
 
 }
 
