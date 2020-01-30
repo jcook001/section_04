@@ -75,7 +75,3 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
-
-# Move starter content downloaded content to an appropriate place if used
-Content/StarterContent/*
-Content/KiteDemo/*
