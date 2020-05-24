@@ -32,6 +32,8 @@ AProjectile::AProjectile()
     ImpactBlast->bAutoActivate = false;
 
     ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force"));
+    ExplosionForce->AttachToComponent(CollisionMesh, FAttachmentTransformRules::KeepRelativeTransform);
+    //ExplosionForce->bAutoActivate = true;
 }
 
 // Called when the game starts or when spawned
