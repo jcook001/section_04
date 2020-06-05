@@ -104,3 +104,12 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVec
 
 	return false;
 };
+
+void ATankPlayerController::DebugRefillAmmo(int amount)
+{
+	if (!GetPawn()) { return; }
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return; };
+
+	AimingComponent->Ammo += amount;
+}

@@ -21,6 +21,9 @@ protected:
     UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
     void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
+	UFUNCTION(BlueprintCallable, Category = "Debug")
+	void DebugRefillAmmo(int amount);
+
 private:
 	virtual void BeginPlay() override;
 

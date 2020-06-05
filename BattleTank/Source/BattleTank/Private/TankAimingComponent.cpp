@@ -34,7 +34,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
     {
         FiringState = EFiringState::OutOfAmmo;
     }
-    else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+    else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds * ReloadTimeMultiplier)
     {
         FiringState = EFiringState::Reloading;
     }

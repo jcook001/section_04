@@ -39,7 +39,7 @@ public:
 
     EFiringState GetFiringState() const;
 
-    UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Firing")
+    UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Firing")
     int32 Ammo = 10;
 
 protected:
@@ -48,6 +48,9 @@ protected:
 
     UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Firing")
     float ReloadTimeInSeconds = 3;
+
+    UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Firing")
+    float ReloadTimeMultiplier = 1;
 
 private:
     virtual void BeginPlay() override;
