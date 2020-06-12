@@ -20,6 +20,10 @@ public:
 	// Called by the engine when actor damage is dealt
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
+	//returns current health as a percentage of current health
+	UFUNCTION(BlueprintPure, Category = "Health")
+	float GetHealthPercent();
+
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	UTankMovementComponent* TankMovementComponent = nullptr;
