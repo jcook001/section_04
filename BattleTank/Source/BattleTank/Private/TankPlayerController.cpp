@@ -6,6 +6,7 @@
 #include "BattleTank.h"
 #include "Engine/Classes/GameFramework/PlayerController.h"
 #include "Engine/World.h"
+#include "Tank.h" // so we can implement OnDeath
 
 void ATankPlayerController::Tick(float DeltaTime)
 {
@@ -38,6 +39,25 @@ void ATankPlayerController::BeginPlay()
 		FoundAimingComponent(AimingComponent);
     }
 };
+
+void ATankPlayerController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank)) { return; };
+
+		// TODO Subscribe our local method to the tank's death event
+
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPossessedTankDeath);
+	}
+}
+
+void ATankPlayerController::OnPossessedTankDeath()
+{
+	StartSpectatingOnly();
+}
 
 void ATankPlayerController::AimTowardsCrosshair()
 {

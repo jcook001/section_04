@@ -11,6 +11,12 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void ATank::BeginPlay()
+{
+    Super::BeginPlay();
+    CurrentHealth = StartingHealth;
+}
+
 float ATank::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
     int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
@@ -19,7 +25,7 @@ float ATank::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, ACo
     this->CurrentHealth -= DamageToApply;
 
     if (CurrentHealth <= 0) {
-        UE_LOG(LogTemp, Warning, TEXT("%s has died"), *this->GetName());
+        OnDeath.Broadcast();
     }
 
     return DamageToApply;
@@ -28,4 +34,9 @@ float ATank::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, ACo
 float ATank::GetHealthPercent()
 {
     return (float)CurrentHealth / (float)StartingHealth;
+}
+
+float ATank::GetCurrentHealth()
+{
+    return CurrentHealth;
 }

@@ -8,6 +8,8 @@
 
 class UTankMovementComponent;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -24,15 +26,20 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Health")
 	float GetHealthPercent();
 
+	FTankDelegate OnDeath;
+
+	float GetCurrentHealth();
+
 protected:
 	UPROPERTY(BlueprintReadOnly)
 	UTankMovementComponent* TankMovementComponent = nullptr;
 
 private:
+	virtual void BeginPlay() override;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 StartingHealth = 20.f;
 	
-	UPROPERTY(VisibleAnywhere, Category = "Health")
-	int32 CurrentHealth = StartingHealth;
+	int32 CurrentHealth; //initialised in BeginPlay()
 
 };
